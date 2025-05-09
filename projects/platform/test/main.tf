@@ -116,6 +116,7 @@ module "alb_ingress_addon" {
   cluster_name                        = var.cluster_name
   vpc_id                              = module.vpc.vpc_id
   aws_region                          = var.region
+  public_subnet_ids                   = module.vpc.public_subnet_ids 
   addon_depends_on_nodegroup_no_taint = module.eks-nodegroup.node_group_without_taint_arn
   depends_on                          = [module.eks-nodegroup]
 }
@@ -152,7 +153,7 @@ resource "time_sleep" "wait_for_alb" {
   depends_on = [data.aws_lb.ingress_alb]
   create_duration = "30s"
 }
-
+/*
 module "waf" {
   source = "git::https://github.com/Khaled-SRE/terraform-modules.git//WAF?ref=v1.0.0"
 
@@ -201,3 +202,4 @@ resource "aws_sns_topic_policy" "security_alerts" {
 
   depends_on = [aws_sns_topic.security_alerts]
 }
+*/
