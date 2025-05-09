@@ -122,11 +122,15 @@ module "alb_ingress_addon" {
 }
 
 /* ------------------------ Argocd Add-on ----------------------- */
+data "aws_acm_certificate" "argocd_cert" {
+  domain = var.argocd_domain_name
+}
+
 module "argo_cd_addon" {
   source                     = "git::https://github.com/Khaled-SRE/terraform-modules.git//EKS_Addons/Argo_Cd?ref=v1.0.0"
   ingress_group_name         = var.ingress_group_name
   argocd_domain_name         = var.argocd_domain_name
-  certificate_arn            = "aaaaaa" #module.acm.certificate_arn
+  certificate_arn            = data.aws_acm_certificate.argocd_cert.arn
   subnet_ids                 = [module.vpc.public_subnet_ids[0], module.vpc.public_subnet_ids[1]]
   security_group_ids         = [module.sg_alb.security_group_id, module.sg_eks.security_group_id]
   depends_on                 = [module.eks-nodegroup, module.alb_ingress_addon, module.route53_hostedzone]
@@ -143,11 +147,12 @@ module "external_dns_addon" {
 /* ------------------------------- WAF ------------------------------ */
 data "aws_lb" "ingress_alb" {
   tags = {
-    "kubernetes.io/service-name" = "kube-system/aws-load-balancer-controller"
-    "ingress.k8s.aws/stack"     = var.ingress_group_name
+    "elbv2.k8s.aws/cluster"      = var.cluster_name
+    "ingress.k8s.aws/resource"   = "LoadBalancer"
+    "ingress.k8s.aws/stack"      = var.cluster_name
   }
 
-  depends_on = [module.alb_ingress_addon]
+  depends_on = [module.alb_ingress_addon, module.argo_cd_addon]
 }
 
 # Add a time delay to ensure ALB is fully created
@@ -155,6 +160,7 @@ resource "time_sleep" "wait_for_alb" {
   depends_on = [data.aws_lb.ingress_alb]
   create_duration = "30s"
 }
+
 /*
 module "waf" {
   source = "git::https://github.com/Khaled-SRE/terraform-modules.git//WAF?ref=v1.0.0"
