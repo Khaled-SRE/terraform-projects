@@ -33,7 +33,7 @@ argocd_domain_name       = "argocd.platform-test.com"
 ACM_zone_type            = "public"
 
 /* -------------------------------- Route 53 -------------------------------- */
-domain        = "platform-test.com"
+domain        = "platform-online.shop"
 
 /* -------------------------------------------------------------------------- */
 /*                               Security Group                               */

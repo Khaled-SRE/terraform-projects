@@ -100,12 +100,13 @@ module "route53_hostedzone" {
 }
 
 /* ------------------------------- ACM ------------------------------ */
+/*
 module "acm" {
   source                = "git::https://github.com/Khaled-SRE/terraform-modules.git//ACM?ref=v1.0.0"
   acm_domain_name       = var.domain
   hosted_zone_id        = module.route53_hostedzone.zone_id
 }
-
+*/
 /* ------------------------------- EKS-Addons ------------------------------- */
 
 /* ---------------------- ALB Ingress Addon -----------------------*/
@@ -124,7 +125,7 @@ module "argo_cd_addon" {
   source                     = "git::https://github.com/Khaled-SRE/terraform-modules.git//EKS_Addons/Argo_Cd?ref=v1.0.0"
   ingress_group_name         = var.ingress_group_name
   argocd_domain_name         = var.argocd_domain_name
-  certificate_arn            = module.acm.certificate_arn
+  certificate_arn            = "aaaaaa" #module.acm.certificate_arn
   depends_on                 = [module.eks-nodegroup, module.alb_ingress_addon, module.acm, module.route53_hostedzone]
 }
 
