@@ -123,7 +123,10 @@ module "alb_ingress_addon" {
 
 /* ------------------------ Argocd Add-on ----------------------- */
 data "aws_acm_certificate" "argocd_cert" {
-  domain = var.domain
+  domain      = "platform-online.shop"
+  statuses    = ["ISSUED"]
+  types       = ["IMPORTED"]
+  most_recent = true
 }
 
 module "argo_cd_addon" {
