@@ -45,21 +45,54 @@ alb_sg_name        = "alb-sg"
 alb_sg_description = "Security group for public ALB"
 ALB_ingress_rules = [
   {
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "Allow HTTPS traffic from internet"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "TCP"
+    cidr_blocks = ["10.0.0.0/16"]
+    description = "all from vpc "
+    from_port   = 0
+    to_port     = 0
+    protocol    = "All"
   },
   {
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "Allow HTTP traffic from internet (will be redirected to HTTPS)"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "TCP"
+    cidr_blocks = ["10.0.0.0/8"]
+    description = "all from vpn cidr "
+    from_port   = 0
+    to_port     = 0
+    protocol    = "All"
   }
 ]
 ALB_egress_rules = [{
+  cidr_blocks = ["0.0.0.0/0"]
+  description = "Allow all outbound traffic for external service connections"
+  from_port   = 0
+  to_port     = 65535
+  protocol    = "All"
+}]
+/* --------------------------------- EKS_SG --------------------------------- */
+eks_sg_name        = "eks-sg"
+eks_sg_description = "security group for eks cluster"
+eks_ingress_rules = [
+  {
+    cidr_blocks = ["10.0.0.0/16"]
+    description = "all from vpc "
+    from_port   = 0
+    to_port     = 0
+    protocol    = "All"
+  },
+  {
+    cidr_blocks = ["10.0.0.0/8"]
+    description = "all from vpn cidr "
+    from_port   = 0
+    to_port     = 0
+    protocol    = "All"
+  },
+  {
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow HTTPS access from anywhere"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "TCP"
+  }
+]
+eks_egress_rules = [{
   cidr_blocks = ["0.0.0.0/0"]
   description = "Allow all outbound traffic for external service connections"
   from_port   = 0
@@ -141,36 +174,3 @@ waf_blocked_requests_threshold    = 50
 # SNS Topic Configuration
 sns_topic_name = "platform-test-eks-waf-alerts"
 
-/* --------------------------------- EKS_SG --------------------------------- */
-eks_sg_name        = "eks-sg"
-eks_sg_description = "security group for eks cluster"
-eks_ingress_rules = [
-  {
-    cidr_blocks = ["10.0.0.0/16"]
-    description = "all from vpc "
-    from_port   = 0
-    to_port     = 0
-    protocol    = "All"
-  },
-  {
-    cidr_blocks = ["10.0.0.0/8"]
-    description = "all from vpn cidr "
-    from_port   = 0
-    to_port     = 0
-    protocol    = "All"
-  },
-  {
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "Allow HTTPS access from anywhere"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "TCP"
-  }
-]
-eks_egress_rules = [{
-  cidr_blocks = ["0.0.0.0/0"]
-  description = "Allow all outbound traffic for external service connections"
-  from_port   = 0
-  to_port     = 65535
-  protocol    = "All"
-}]
