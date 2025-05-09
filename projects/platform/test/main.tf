@@ -126,7 +126,7 @@ module "argo_cd_addon" {
   ingress_group_name         = var.ingress_group_name
   argocd_domain_name         = var.argocd_domain_name
   certificate_arn            = "aaaaaa" #module.acm.certificate_arn
-  depends_on                 = [module.eks-nodegroup, module.alb_ingress_addon, module.acm, module.route53_hostedzone]
+  depends_on                 = [module.eks-nodegroup, module.alb_ingress_addon, module.route53_hostedzone]
 }
 
 /* --------------------- External DNS Add-on -------------------- */
