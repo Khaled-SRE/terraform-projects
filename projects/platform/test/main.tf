@@ -97,6 +97,10 @@ module "route53_hostedzone" {
   source       = "git::https://github.com/Khaled-SRE/terraform-modules.git//Route53?ref=v1.0.0"
   domain       = var.domain
   cluster_name = var.cluster_name
+  private_zone = {
+    vpc_id     = module.vpc.vpc_id  
+    vpc_region = var.region     
+  }
 }
 
 /* ------------------------------- ACM ------------------------------ */
