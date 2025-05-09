@@ -61,7 +61,6 @@ module "eks" {
   infrastructure_region                = var.region
   cluster_name                         = var.cluster_name
   cluster_version                      = var.cluster_version
-  profile_name                         = var.profile_name
   eks_role_name                        = var.eks_role_name
   cluster_endpoint_private_access      = var.cluster_endpoint_private_access
   cluster_endpoint_public_access       = var.cluster_endpoint_public_access
@@ -104,7 +103,6 @@ module "route53_hostedzone" {
 module "acm" {
   source                = "git::https://github.com/Khaled-SRE/terraform-modules.git//ACM?ref=v1.0.0"
   acm_domain_name       = var.domain
-  cluster_name          = var.cluster_name
   hosted_zone_id        = module.route53_hostedzone.zone_id
 }
 

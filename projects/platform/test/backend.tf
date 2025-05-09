@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 1.10" 
+  required_version = ">= 1.5.7" 
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -14,8 +14,8 @@ terraform {
     bucket         = "platform-test-remote-tfstate" 
     key            = "platform/test/platform-test"   
     region         = "eu-west-1"                   
-    encrypt        = true                          
-    use_lockfile   = true                          
+    encrypt        = true
+    use_lockfile   = true
   }
 }
 

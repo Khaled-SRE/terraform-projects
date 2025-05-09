@@ -16,6 +16,9 @@ variable "vpc_name" {
 variable "private_subnet_cidrs" {
   type = list(string)
 }
+variable "public_subnet_cidrs" {
+  type = list(string)
+}
 variable "availability_zones" {
   type = list(string)
 }
@@ -26,9 +29,6 @@ variable "cluster_name" {
   default = ""
 }
 variable "cluster_version" {
-  type = string
-}
-variable "profile_name" {
   type = string
 }
 variable eks_role_name {
@@ -144,6 +144,10 @@ variable "ALB_egress_rules" {
   }))
 }
 
+variable "alb_sg_description" {
+  type        = string
+  description = "Description for the ALB security group"
+}
 
 /* --------------------------------- EKS SG --------------------------------- */
 variable "eks_sg_name" {
@@ -169,6 +173,11 @@ variable "eks_egress_rules" {
     cidr_blocks = list(string)
     description = string
   }))
+}
+
+variable "eks_sg_description" {
+  type        = string
+  description = "Description for the EKS security group"
 }
 
 /* --------------------------------- WAF --------------------------------- */

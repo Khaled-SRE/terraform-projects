@@ -1,7 +1,6 @@
 /* -------------------------------------------------------------------------- */
 env    = "test"
 region = "eu-west-1"
-
 /* ------------------------------ VPC Variables ----------------------------- */
 vpc_cidr             = "10.0.0.0/16"
 vpc_name             = "eks-test-vpc"
@@ -11,8 +10,7 @@ availability_zones   = ["eu-west-1a", "eu-west-1b", "eu-west-1c"]
 
 /* ------------------------------ EKS Variables ----------------------------- */
 cluster_name                         = "platform-test-eks"
-cluster_version                      = "1.33"
-profile_name                         = "platform-test"
+cluster_version                      = "1.32"
 eks_role_name                        = "eks-role-test"
 cluster_endpoint_private_access      = true
 cluster_endpoint_public_access       = false
@@ -74,8 +72,11 @@ waf_description = "WAF protection for EKS ALB Ingress"
 
 waf_rules = [
   {
-    name     = "AWSManagedRulesCommonRuleSet"
-    priority = 1
+    name            = "AWSManagedRulesCommonRuleSet"
+    priority        = 1
+    override_action = {
+      none = {}
+    }
     statement = {
       managed_rule_group_statement = {
         name        = "AWSManagedRulesCommonRuleSet"
@@ -94,8 +95,11 @@ waf_rules = [
     }
   },
   {
-    name     = "AWSManagedRulesKnownBadInputsRuleSet"
-    priority = 2
+    name            = "AWSManagedRulesKnownBadInputsRuleSet"
+    priority        = 2
+    override_action = {
+      none = {}
+    }
     statement = {
       managed_rule_group_statement = {
         name        = "AWSManagedRulesKnownBadInputsRuleSet"
@@ -109,8 +113,11 @@ waf_rules = [
     }
   },
   {
-    name     = "AWSManagedRulesAmazonIpReputationList"
-    priority = 3
+    name            = "AWSManagedRulesAmazonIpReputationList"
+    priority        = 3
+    override_action = {
+      none = {}
+    }
     statement = {
       managed_rule_group_statement = {
         name        = "AWSManagedRulesAmazonIpReputationList"
