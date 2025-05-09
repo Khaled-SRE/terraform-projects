@@ -122,18 +122,12 @@ module "alb_ingress_addon" {
 }
 
 /* ------------------------ Argocd Add-on ----------------------- */
-data "aws_acm_certificate" "argocd_cert" {
-  domain      = "platform-online.shop"
-  statuses    = ["ISSUED"]
-  types       = ["IMPORTED"]
-  most_recent = true
-}
 
 module "argo_cd_addon" {
   source                     = "git::https://github.com/Khaled-SRE/terraform-modules.git//EKS_Addons/Argo_Cd?ref=v1.0.0"
   ingress_group_name         = var.ingress_group_name
   argocd_domain_name         = var.argocd_domain_name
-  certificate_arn            = data.aws_acm_certificate.argocd_cert.arn
+  certificate_arn            = var.certificate_arn
   subnet_ids                 = [module.vpc.public_subnet_ids[0], module.vpc.public_subnet_ids[1]]
   security_group_ids         = [module.sg_alb.security_group_id, module.sg_eks.security_group_id]
   depends_on                 = [module.eks-nodegroup, module.alb_ingress_addon, module.route53_hostedzone]

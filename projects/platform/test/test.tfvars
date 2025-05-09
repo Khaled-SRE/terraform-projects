@@ -30,6 +30,7 @@ node_group_instance_types = ["t3.large"]
 /* --------------------------- EKS-Addon Variables -------------------------- */
 ingress_group_name       = "platform-test-eks"
 argocd_domain_name       = "argocd.platform-online.shop"
+certificate_arn          = "arn:aws:acm:eu-west-1:767397883134:certificate/c8fdbfe8-a678-4055-8e4e-a48183f105af"
 ACM_zone_type            = "public"
 
 /* -------------------------------- Route 53 -------------------------------- */
