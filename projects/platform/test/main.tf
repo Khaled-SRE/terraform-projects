@@ -114,9 +114,6 @@ module "alb_ingress_addon" {
   source                              = "git::https://github.com/Khaled-SRE/terraform-modules.git//EKS_Addons/ALB_Ingress?ref=v1.0.0"
   eks_alb_role_arn                    = module.eks.eks_alb_role_arn  
   cluster_name                        = var.cluster_name
-  vpc_id                              = module.vpc.vpc_id
-  aws_region                          = var.region
-  public_subnet_ids                   = module.vpc.public_subnet_ids 
   addon_depends_on_nodegroup_no_taint = module.eks-nodegroup.node_group_without_taint_arn
   depends_on                          = [module.eks-nodegroup]
 }
@@ -127,8 +124,7 @@ module "argo_cd_addon" {
   source                     = "git::https://github.com/Khaled-SRE/terraform-modules.git//EKS_Addons/Argo_Cd?ref=v1.0.0"
   ingress_group_name         = var.ingress_group_name
   argocd_domain_name         = var.argocd_domain_name
-  certificate_arn            = var.certificate_arn
-  subnet_ids                 = [module.vpc.public_subnet_ids[0], module.vpc.public_subnet_ids[1]]
+  subnet_ids                 = [module.vpc.private_subnet_ids[0], module.vpc.private_subnet_ids[1], module.vpc.private_subnet_ids[2]]
   security_group_ids         = [module.sg_alb.security_group_id, module.sg_eks.security_group_id]
   depends_on                 = [module.eks-nodegroup, module.alb_ingress_addon, module.route53_hostedzone]
 }
