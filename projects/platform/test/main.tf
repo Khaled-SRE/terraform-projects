@@ -123,7 +123,7 @@ module "alb_ingress_addon" {
 
 /* ------------------------ Argocd Add-on ----------------------- */
 data "aws_acm_certificate" "argocd_cert" {
-  domain = var.argocd_domain_name
+  domain = var.domain
 }
 
 module "argo_cd_addon" {
