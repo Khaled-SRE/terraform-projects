@@ -127,6 +127,8 @@ module "argo_cd_addon" {
   ingress_group_name         = var.ingress_group_name
   argocd_domain_name         = var.argocd_domain_name
   certificate_arn            = "aaaaaa" #module.acm.certificate_arn
+  subnet_ids                 = [module.vpc.public_subnet_ids[0], module.vpc.public_subnet_ids[1]]
+  security_group_ids         = [module.sg_alb.security_group_id, module.sg_eks.security_group_id]
   depends_on                 = [module.eks-nodegroup, module.alb_ingress_addon, module.route53_hostedzone]
 }
 
