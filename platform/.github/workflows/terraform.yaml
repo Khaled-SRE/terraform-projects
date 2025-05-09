@@ -60,10 +60,19 @@ jobs:
           aws-region: eu-west-1
       - name: Generate Kubeconfig
         run: |
-          aws eks --region eu-west-1 update-kubeconfig --name $cluster_name --role-arn arn:aws:iam::${{ vars.AWS_ACCOUNT_ID }}:role/terraform-role
-          # Test the connection to the cluster
-          kubectl get nodes
-          helm ls -A
+          # Define cluster name based on tribe and environment
+          cluster_name="${{ inputs.tribe }}-${{ inputs.environment }}-eks"
+          
+          # Check if cluster exists
+          if aws eks describe-cluster --region eu-west-1 --name $cluster_name 2>/dev/null; then
+            echo "Cluster exists, generating kubeconfig..."
+            aws eks --region eu-west-1 update-kubeconfig --name $cluster_name --role-arn arn:aws:iam::${{ vars.AWS_ACCOUNT_ID }}:role/terraform-role
+            # Test the connection to the cluster
+            kubectl get nodes
+            helm ls -A
+          else
+            echo "Cluster does not exist yet, skipping kubeconfig generation..."
+          fi
       - uses: hashicorp/setup-terraform@v3
         with:
           terraform_wrapper: false
