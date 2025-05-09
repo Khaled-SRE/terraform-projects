@@ -13,7 +13,7 @@ cluster_name                         = "platform-test-eks"
 cluster_version                      = "1.32"
 eks_role_name                        = "eks-role-test"
 cluster_endpoint_private_access      = true
-cluster_endpoint_public_access       = false
+cluster_endpoint_public_access       = true
 cluster_endpoint_public_access_cidrs = ["0.0.0.0/0"]
 
 /* ------------------------- EKS-NodeGroup Variables ------------------------ */
@@ -157,6 +157,13 @@ eks_ingress_rules = [
     from_port   = 0
     to_port     = 0
     protocol    = "All"
+  },
+  {
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow HTTPS access from anywhere"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "TCP"
   }
 ]
 eks_egress_rules = [{
