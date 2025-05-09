@@ -103,7 +103,9 @@ variable "ingress_group_name" {
 variable "argocd_domain_name" {
   type = string
 }
-
+variable "certificate_arn" {
+  type = string
+}
 /* -------------------------------- Route 53 -------------------------------- */
 variable "domain" {
   type = string
