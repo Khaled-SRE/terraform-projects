@@ -158,7 +158,7 @@ module "external_dns_addon" {
   depends_on   = [module.alb_ingress_addon]
 }
 /* ------------------------------- WAF ------------------------------ */
-/*
+
 data "aws_lb" "ingress_alb" {
   tags = {
     "elbv2.k8s.aws/cluster"      = var.cluster_name
@@ -224,4 +224,3 @@ resource "aws_sns_topic_policy" "security_alerts" {
 
   depends_on = [aws_sns_topic.security_alerts]
 }
-*/
