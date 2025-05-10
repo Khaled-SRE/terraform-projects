@@ -14,6 +14,23 @@ The infrastructure includes:
 - 🤖 ArgoCD for GitOps deployments
 - 📛 External DNS for automatic DNS management
 
+## 🌐 Domain Management
+
+### Domain Registration and SSL Setup
+1. **Domain Registration** 🏷️
+   - Domain registered through Hostinger
+   - Example: `platform-online.shop`
+
+2. **SSL Certificate** 🔒
+   - Certificate obtained using Certbot Let's Encrypt
+   - Certificate imported into AWS Certificate Manager (ACM)
+   - Used for securing HTTPS endpoints
+
+3. **DNS Management** 📝
+   - Nameservers (NS) updated to AWS Route 53
+   - Domain now managed through AWS Route 53
+   - Enables AWS DNS management and ACM integration
+
 ## 🛠️ Prerequisites
 
 - 🧑‍💻 AWS CLI configured with appropriate credentials
