@@ -99,6 +99,25 @@ module "route53_hostedzone" {
   cluster_name = var.cluster_name
 }
 
+/* ------------------------------- ECR ------------------------------ */
+module "microservices_product" {
+  source = "git::https://github.com/Khaled-SRE/terraform-modules.git//ECR?ref=v1.0.0"
+  ecr_name = "microservices-product"
+  tags = {
+    Environment = "test"
+    Component   = "microservices-product"
+  }
+}
+
+module "microservices_user" {
+  source = "git::https://github.com/Khaled-SRE/terraform-modules.git//ECR?ref=v1.0.0"
+  ecr_name = "microservices-user"
+  tags = {
+    Environment = "test"
+    Component   = "microservices-user"
+  }
+}
+
 /* ------------------------------- ACM ------------------------------ */
 /*
 module "acm" {
@@ -139,6 +158,7 @@ module "external_dns_addon" {
   depends_on   = [module.alb_ingress_addon]
 }
 /* ------------------------------- WAF ------------------------------ */
+/*
 data "aws_lb" "ingress_alb" {
   tags = {
     "elbv2.k8s.aws/cluster"      = var.cluster_name
@@ -155,7 +175,7 @@ resource "time_sleep" "wait_for_alb" {
   create_duration = "30s"
 }
 
-/*
+
 module "waf" {
   source = "git::https://github.com/Khaled-SRE/terraform-modules.git//WAF?ref=v1.0.0"
 
