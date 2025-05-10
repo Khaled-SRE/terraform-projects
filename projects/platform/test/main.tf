@@ -97,10 +97,6 @@ module "route53_hostedzone" {
   source       = "git::https://github.com/Khaled-SRE/terraform-modules.git//Route53?ref=v1.0.0"
   domain       = var.domain
   cluster_name = var.cluster_name
-  private_zone = {
-    vpc_id     = module.vpc.vpc_id  
-    vpc_region = var.region     
-  }
 }
 
 /* ------------------------------- ACM ------------------------------ */
@@ -128,7 +124,8 @@ module "argo_cd_addon" {
   source                     = "git::https://github.com/Khaled-SRE/terraform-modules.git//EKS_Addons/Argo_Cd?ref=v1.0.0"
   ingress_group_name         = var.ingress_group_name
   argocd_domain_name         = var.argocd_domain_name
-  subnet_ids                 = [module.vpc.private_subnet_ids[0], module.vpc.private_subnet_ids[1], module.vpc.private_subnet_ids[2]]
+  certificate_arn            = var.certificate_arn
+  subnet_ids                 = [module.vpc.public_subnet_ids[0], module.vpc.public_subnet_ids[1], module.vpc.public_subnet_ids[2]]
   security_group_ids         = [module.sg_alb.security_group_id, module.sg_eks.security_group_id]
   depends_on                 = [module.eks-nodegroup, module.alb_ingress_addon, module.route53_hostedzone]
 }

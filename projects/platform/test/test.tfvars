@@ -45,18 +45,18 @@ alb_sg_name        = "alb-sg"
 alb_sg_description = "Security group for public ALB"
 ALB_ingress_rules = [
   {
-    cidr_blocks = ["10.0.0.0/16"]
-    description = "all from vpc "
-    from_port   = 0
-    to_port     = 0
-    protocol    = "All"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow HTTPS from internet"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
   },
   {
-    cidr_blocks = ["10.0.0.0/8"]
-    description = "all from vpn cidr "
-    from_port   = 0
-    to_port     = 0
-    protocol    = "All"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow HTTP for redirect"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
   }
 ]
 ALB_egress_rules = [{
