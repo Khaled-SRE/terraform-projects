@@ -90,6 +90,9 @@ module "eks-nodegroup" {
   node_group_role           = var.node_group_name
   node_group_ami_type       = var.node_group_ami_type
   eks_nodes_role_name       = var.eks_nodes_role_name
+  vpc_id                    = module.vpc.vpc_id
+  vpc_cidr_blocks           = var.vpc_cidr
+  eks_security_group_id     = module.eks.eks_security_group_id
 }
 
 /* ------------------------------- Route 53 ------------------------------ */

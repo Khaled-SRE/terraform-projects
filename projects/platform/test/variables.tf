@@ -106,7 +106,8 @@ variable "argocd_domain_name" {
 variable "certificate_arn" {
   type = string
 }
-/* -------------------------------- Route 53 -------------------------------- */
+
+/* ------------------------------- Route 53 -------------------------------- */
 variable "domain" {
   type = string
 }
