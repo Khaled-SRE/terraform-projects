@@ -120,3 +120,8 @@ jobs:
         run: |
           cd projects/${{ inputs.tribe }}/${{ inputs.environment }}
           terraform apply -var-file ${{ inputs.environment }}.tfvars -auto-approve
+      - name: Terraform destroy
+        if: ${{ inputs.action  == 'destroy' }}
+        run: |
+          cd projects/${{ inputs.tribe }}/${{ inputs.environment }}
+          terraform destroy -var-file ${{ inputs.environment }}.tfvars -auto-approve
