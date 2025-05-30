@@ -12,7 +12,7 @@ terraform {
   }
   backend "s3" {
     bucket         = "platform-test-remote-tfstate" 
-    key            = "platform/test/platform-test"   
+    key            = "platform/testt/platform-test"   
     region         = "eu-west-1"                   
     encrypt        = true
     use_lockfile   = true
